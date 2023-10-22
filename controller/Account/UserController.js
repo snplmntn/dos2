@@ -1,4 +1,6 @@
 const User = require("../../models/User");
+const Announcement = require("../../models/Content/Article");
+const Post = require("../../models/Content/Post");
 const bcrypt = require("bcrypt");
 
 // const user_index = async (req, res) => {
@@ -40,10 +42,47 @@ const user_delete = async (req, res) => {
 
 const user_update = async (req, res) => {
   // if (req.body.userId === req.params.id || req.user.isAdmin) {
+  const { userId } = req.params;
   if (req.body.password) {
     try {
       const salt = await bcrypt.genSalt(10);
       req.body.password = await bcrypt.hash(req.body.password, salt);
+    } catch (err) {
+      return res.status(500).json({ message: "Internal Server Error", err });
+    }
+  }
+
+  if (req.body.password) {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      req.body.password = await bcrypt.hash(req.body.password, salt);
+    } catch (err) {
+      return res.status(500).json({ message: "Internal Server Error", err });
+    }
+  }
+
+  // if (req.body.firstname) {
+  //   try {
+  //     const firstname = await Post.findById(req.body.userId).firstname;
+  //     const filter = { firstname: firstname };
+  //     const update = { firstname: req.body.firstname };
+  //     await Post.updateMany(filter, update);
+  //   } catch (err) {
+  //     return res.status(500).json({ message: "Internal Server Error", err });
+  //   }
+  // }
+
+  if (req.body.username) {
+    try {
+      const user = await User.findById(userId);
+      console.log("got user");
+      console.log(user);
+      const filter = { username: user.username };
+      console.log(filter);
+      const update = { username: req.body.username };
+      console.log("update all g");
+      await Post.updateMany(filter, update);
+      console.log("updated");
     } catch (err) {
       return res.status(500).json({ message: "Internal Server Error", err });
     }
