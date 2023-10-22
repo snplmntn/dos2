@@ -20,14 +20,14 @@ const PostSchema = new mongoose.Schema({
     required: true,
     index: "text",
   },
-  isAnonymous: {
-    type: Boolean,
-    default: false,
-  },
   category: {
     type: Number,
     enum: [0, 1, 2, 3, 4],
     default: 0,
+  },
+  isAnonymous: {
+    type: Boolean,
+    default: false,
   },
   dateCreated: {
     type: Date,

@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 //Routes
 const authRoute = require("./routes/Account/auth");
@@ -19,10 +20,11 @@ const aliveRoute = require("./routes/alive");
 //Initialization
 const app = express();
 const port = 5555;
+dotenv.config();
 
 //Middlewares
 app.use(express.json());
-dotenv.config();
+app.use(cors());
 
 //User
 app.use("/api/auth", authRoute);
