@@ -15,6 +15,7 @@ const announcementRoute = require("./routes/Content/announcement");
 const articleRoute = require("./routes/Content/article");
 const searchRoute = require("./routes/Content/search");
 
+const aliveRoute = require("./routes/alive");
 //Initialization
 const app = express();
 const port = 5555;
@@ -34,9 +35,10 @@ app.use("/api/mail", mailRoute);
 app.use("/api/post", postRoute);
 app.use("/api/announcement", announcementRoute);
 app.use("/api/article", articleRoute);
+app.use("/api/search", searchRoute);
 
 //Others
-app.use("/api/search", searchRoute);
+app.use("/api/alive", aliveRoute);
 
 mongoose.connect(process.env.MONGO_URI);
 
