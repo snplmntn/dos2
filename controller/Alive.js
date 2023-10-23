@@ -1,13 +1,12 @@
 const alive = async (req, res) => {
+  const timestamp = Date.now();
+
+  const date = new Date(timestamp);
+  const formattedDate = date.toLocaleString();
   try {
-    const timestamp = Date.now();
-
-    const date = new Date(timestamp);
-    const formattedDate = date.toLocaleString();
-
-    console.log("I AM ALIVE", formattedDate);
-    return res.status(200).json({ message: "I AM ALIVE" });
+    return res.status(200).json({ message: "I AM ALIVE", Date: formattedDate });
   } catch (err) {
+    console.error("I AM DEAD", formattedDate);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
