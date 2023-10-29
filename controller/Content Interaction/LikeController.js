@@ -26,6 +26,7 @@ const likePost = async (req, res) => {
       like,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -39,6 +40,7 @@ const getPostLikeCount = async (req, res) => {
       likeCount,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -52,6 +54,7 @@ const unlikePost = async (req, res) => {
       message: "Unliked Post successfully",
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };

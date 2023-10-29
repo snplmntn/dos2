@@ -7,6 +7,7 @@ const search_get = async (req, res) => {
     const posts = await Post.find();
     res.status(200).json(posts);
   } catch (err) {
+    console.error(err);
     return res.status(500).json(err);
   }
 };
@@ -24,6 +25,7 @@ const search_post = async (req, res) => {
 
     return res.status(200).json(user);
   } catch (err) {
+    console.error(err);
     return res.status(500).json(err);
   }
 };

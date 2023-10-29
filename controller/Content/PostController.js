@@ -5,6 +5,7 @@ const post_index = async (req, res) => {
     const posts = await Post.find();
     res.status(200).json(posts);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -17,6 +18,7 @@ const post_get = async (req, res) => {
     if (!post) return res.status(404).json({ message: "Post not found" });
     res.status(200).json(post);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -29,6 +31,7 @@ const post_user_get = async (req, res) => {
     if (!posts) return res.status(404).json({ message: "Posts not found" });
     res.status(200).json(posts);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -39,6 +42,7 @@ const post_post = async (req, res) => {
     const savedPost = await newPost.save();
     res.status(200).json({ message: "Post Successfully Created", savedPost });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -60,6 +64,7 @@ const post_update = async (req, res) => {
     // Send the updated document in the response
     res.status(200).json({ message: "Post Updated Successfully", updatedPost });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
   // } else {
@@ -73,6 +78,7 @@ const post_delete = async (req, res) => {
     await Post.findByIdAndDelete(req.params.id);
     res.status(200).json("Post Successfully Deleted");
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
   // } else {

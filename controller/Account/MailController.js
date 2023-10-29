@@ -126,6 +126,7 @@ const sendEmailVerificationMail = async (req, res) => {
       });
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -245,6 +246,7 @@ const sendAccountVerificationMail = async (req, res) => {
       });
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };

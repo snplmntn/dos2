@@ -5,6 +5,7 @@ const announcement_index = async (req, res) => {
     const announcements = await Announcement.find();
     res.status(200).json(announcements);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -18,6 +19,7 @@ const announcement_get = async (req, res) => {
       return res.status(404).json({ message: "Announcement not found" });
     res.status(200).json(announcement);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -31,6 +33,7 @@ const announcement_user_get = async (req, res) => {
       return res.status(404).json({ message: "Announcements not found" });
     res.status(200).json(announcements);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -44,6 +47,7 @@ const announcement_post = async (req, res) => {
       savedAnnouncement,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -67,6 +71,7 @@ const announcement_update = async (req, res) => {
       .status(200)
       .json({ message: "Article Updated Successfully", updatedArticle });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
   // } else {
@@ -81,6 +86,7 @@ const announcement_delete = async (req, res) => {
     await Announcement.findByIdAndDelete(req.params.id);
     res.status(200).json("Announcement Successfully Deleted");
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
   // } else {

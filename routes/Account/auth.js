@@ -7,4 +7,7 @@ router.post("/signup", authController.user_signup);
 // LOGIN
 router.post("/login", authController.user_login);
 
+// LOGIN
+router.post("/logout", authController.InvalidateToken);
+
 module.exports = router;

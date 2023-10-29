@@ -23,6 +23,7 @@ const user_index = async (req, res) => {
     const accounts = await User.find();
     res.status(200).json(accounts);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -33,6 +34,7 @@ const user_delete = async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json("Account Successfully Deleted");
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
   // } else {
@@ -48,6 +50,7 @@ const user_update = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       req.body.password = await bcrypt.hash(req.body.password, salt);
     } catch (err) {
+      console.error(err);
       return res.status(500).json({ message: "Internal Server Error", err });
     }
   }
@@ -57,6 +60,7 @@ const user_update = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       req.body.password = await bcrypt.hash(req.body.password, salt);
     } catch (err) {
+      console.error(err);
       return res.status(500).json({ message: "Internal Server Error", err });
     }
   }
@@ -84,6 +88,7 @@ const user_update = async (req, res) => {
       await Post.updateMany(filter, update);
       console.log("updated");
     } catch (err) {
+      console.error(err);
       return res.status(500).json({ message: "Internal Server Error", err });
     }
   }
@@ -94,6 +99,7 @@ const user_update = async (req, res) => {
     });
     res.status(200).json("Account Successfully Updated");
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
   // } else {

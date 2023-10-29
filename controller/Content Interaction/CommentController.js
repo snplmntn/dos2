@@ -17,6 +17,7 @@ const commentPost = async (req, res) => {
       comment,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -36,6 +37,7 @@ const getPostComments = async (req, res) => {
       });
     }
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -49,6 +51,7 @@ const getPostCommentCount = async (req, res) => {
       commentCount,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };

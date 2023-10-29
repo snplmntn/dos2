@@ -16,6 +16,7 @@ const postReportPost = async (req, res) => {
       report,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -35,6 +36,7 @@ const getReport = async (req, res) => {
       });
     }
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -53,6 +55,7 @@ const getReports = async (req, res) => {
       });
     }
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -72,6 +75,7 @@ const deleteReport = async (req, res) => {
       });
     }
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };

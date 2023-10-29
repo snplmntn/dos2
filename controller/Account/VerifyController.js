@@ -20,6 +20,7 @@ const email_verification = async (req, res) => {
 
     res.status(200).json({ message: "Email Successfully Verified", user });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -55,6 +56,7 @@ const account_verification = async (req, res) => {
 
     res.status(200).json({ message: "Account Successfully Verified", user });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };

@@ -5,6 +5,7 @@ const article_index = async (req, res) => {
     const articles = await Article.find();
     res.status(200).json(articles);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -17,6 +18,7 @@ const article_get = async (req, res) => {
     if (!article) return res.status(404).json({ message: "Article not found" });
     res.status(200).json(article);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -30,6 +32,7 @@ const article_user_get = async (req, res) => {
       return res.status(404).json({ message: "Articles not found" });
     res.status(200).json(articles);
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -42,6 +45,7 @@ const article_post = async (req, res) => {
       .status(200)
       .json({ message: "Article Successfully Created", savedArticle });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
@@ -65,6 +69,7 @@ const article_update = async (req, res) => {
       .status(200)
       .json({ message: "Article Updated Successfully", updatedArticle });
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
   // } else {
@@ -78,6 +83,7 @@ const article_delete = async (req, res) => {
     await Article.findByIdAndDelete(req.params.id);
     res.status(200).json("Article Successfully Deleted");
   } catch (err) {
+    console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
   // } else {

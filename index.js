@@ -5,18 +5,24 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 
 //Routes
+//Auth Controller
+const auth = require("./checkAuth");
+
+//Account Routes
 const authRoute = require("./routes/Account/auth");
 const userRoute = require("./routes/Account/user");
 const verifyRoute = require("./routes/Account/verify");
 const uploadRoute = require("./routes/Account/upload");
 const mailRoute = require("./routes/Account/mail");
 
+//Content Routes
 const postRoute = require("./routes/Content/post");
 const announcementRoute = require("./routes/Content/announcement");
 const articleRoute = require("./routes/Content/article");
 const searchRoute = require("./routes/Content/search");
 
 const aliveRoute = require("./routes/alive");
+
 //Initialization
 const app = express();
 const port = 5555;
@@ -28,16 +34,18 @@ app.use(cors());
 
 //User
 app.use("/api/auth", authRoute);
-app.use("/api/users", userRoute);
 app.use("/api/verify", verifyRoute);
-app.use("/api/upload", uploadRoute);
 app.use("/api/mail", mailRoute);
+//Protected User route
+app.use("/api/users", auth, userRoute);
+app.use("/api/upload", auth, uploadRoute);
 
 //Content
-app.use("/api/post", postRoute);
-app.use("/api/announcement", announcementRoute);
 app.use("/api/article", articleRoute);
-app.use("/api/search", searchRoute);
+//Protected User route
+app.use("/api/post", auth, postRoute);
+app.use("/api/announcement", auth, announcementRoute);
+app.use("/api/search", auth, searchRoute);
 
 //Others
 app.use("/api/alive", aliveRoute);
