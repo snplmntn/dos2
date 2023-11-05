@@ -17,8 +17,6 @@ const sendEmailVerificationMail = async (req, res) => {
       { new: true }
     );
 
-    console.log(user);
-
     const transporter = nodemailer.createTransport({
       host: "smtp.zoho.com",
       port: 465,
@@ -108,7 +106,7 @@ const sendEmailVerificationMail = async (req, res) => {
                   below to verify your email and join our community.
                 </p>
                 <a
-                  href="http://localhost:5555/api/verify/email?token=${user.verificationToken}"
+                  href="https://backend.dosshs.online/api/verify/email?token=${verificationToken}"
                   class="button"
                   >Verify Email</a
                 >

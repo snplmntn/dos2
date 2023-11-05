@@ -18,7 +18,7 @@ const email_verification = async (req, res) => {
     user.verificationToken = "";
     await user.save();
 
-    res.status(200).json({ message: "Email Successfully Verified", user });
+    res.status(200).json({ message: "Email Successfully Verified" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
@@ -54,7 +54,7 @@ const account_verification = async (req, res) => {
       await user.save();
     }, 5 * 60 * 1000);
 
-    res.status(200).json({ message: "Account Successfully Verified", user });
+    res.status(200).json({ message: "Account Successfully Verified" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
