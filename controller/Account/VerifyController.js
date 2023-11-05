@@ -4,12 +4,12 @@ const email_verification = async (req, res) => {
   const { token } = req.query;
   try {
     const user = await User.findOne({ verificationToken: token });
-
+    console.log(user);
     if (!user) {
       return res.status(400).json({ message: "Invalid verification token" });
     }
 
-    if (user.emailValid == true)
+    if (user.emailValid === true)
       return res
         .status(409)
         .json({ message: "Account Email already verified" });
