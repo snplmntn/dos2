@@ -3,20 +3,33 @@ const Announcement = require("../../models/Content/Article");
 const Post = require("../../models/Content/Post");
 const bcrypt = require("bcrypt");
 
-// const user_index = async (req, res) => {
-//   const userId = req.query.userId;
-//   const username = req.query.username;
+const user_get = async (req, res) => {
+  const userId = req.query.userId;
+  const username = req.query.username;
 
-//   try {
-//     const user = userId
-//       ? await User.findById(userId)
-//       : await User.findOne({ username: username });
-//     const { password, isAdmin, __v, ...other } = user._doc;
-//     res.status(200).json(other);
-//   } catch (err) {
-//     return res.status(500).json(err);
-//   }
-// };
+  try {
+    const user = userId
+      ? await User.findById(userId)
+      : await User.findOne({ username: username });
+    const {
+      email,
+      emailValid,
+      section,
+      friends,
+      accountVerification,
+      dateAccountCreated,
+      verificationToken,
+      verificationTokenExpiry,
+      password,
+      isAdmin,
+      __v,
+      ...other
+    } = user._doc;
+    res.status(200).json({ message: "User Fetched", other });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
 
 const user_index = async (req, res) => {
   try {
@@ -84,6 +97,7 @@ const user_update = async (req, res) => {
 };
 
 module.exports = {
+  user_get,
   user_index,
   user_delete,
   user_update,
