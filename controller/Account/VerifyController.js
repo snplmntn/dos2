@@ -4,9 +4,8 @@ const email_verification = async (req, res) => {
   const { token } = req.query;
   try {
     const user = await User.findOne({ verificationToken: token });
-    console.log(user);
     if (!user) {
-      return res.status(400).json({ message: "Invalid verification token" });
+      return res.status(400).json({ message: "Invalid verification code" });
     }
 
     if (user.emailValid === true)

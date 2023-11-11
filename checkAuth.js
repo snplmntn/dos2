@@ -27,8 +27,7 @@ const verifyToken = async (req, res, next) => {
         .json({ message: "Access denied. Token has expired." });
     }
 
-    req.user = decoded;
-    // console.log(decoded);
+    // req.user = decoded;
     next();
   } catch (err) {
     console.error(err);

@@ -8,7 +8,7 @@ router.get("/", userController.user_index);
 // router.get("/:username", userController.user_index);
 
 //Update User
-router.put("/:id", userController.user_update);
+router.put("/:userId", userController.user_update);
 
 //Delete User
 router.delete("/:id", userController.user_delete);

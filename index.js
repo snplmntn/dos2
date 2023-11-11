@@ -37,7 +37,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/verify", verifyRoute);
 app.use("/api/mail", mailRoute);
 //Protected User route
-app.use("/api/users", auth, userRoute);
+app.use("/api/user", auth, userRoute);
 app.use("/api/upload", auth, uploadRoute);
 
 //Content

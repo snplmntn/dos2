@@ -9,7 +9,7 @@ const sendEmailVerificationMail = async (req, res) => {
   const { userId } = req.params;
   try {
     //Generate Token
-    const verificationToken = createVerificationToken(16);
+    const verificationToken = createVerificationToken(3);
 
     const user = await User.findByIdAndUpdate(
       userId,
@@ -102,14 +102,10 @@ const sendEmailVerificationMail = async (req, res) => {
                   valuable experiences.
                 </p>
                 <p>
-                  To get started, please verify your email address. Click the button
+                  To get started, please verify your email address. Input the code
                   below to verify your email and join our community.
                 </p>
-                <a
-                  href="https://backend.dosshs.online/api/verify/email?token=${verificationToken}"
-                  class="button"
-                  >Verify Email</a
-                >
+                <h2>${user.verificationToken}</h2>
               </div>
               <div class="footer">&copy; 2023 DOS</div>
             </div>
@@ -128,6 +124,14 @@ const sendEmailVerificationMail = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
+
+{
+  /* <a
+                  href="https://backend.dosshs.online/api/verify/email?token=${verificationToken}"
+                  class="button"
+                  >Verify Email</a
+                > */
+}
 
 const sendAccountVerificationMail = async (req, res) => {
   const { userId } = req.params;
