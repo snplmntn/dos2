@@ -2,6 +2,7 @@ const User = require("../../models/User");
 const Announcement = require("../../models/Content/Article");
 const Post = require("../../models/Content/Post");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const user_get = async (req, res) => {
   const userId = req.query.userId;
@@ -56,6 +57,7 @@ const user_delete = async (req, res) => {
 };
 
 const user_update = async (req, res) => {
+  const KEY = process.env.KEY;
   const { userId } = req.params;
 
   if (req.body.password) {
@@ -89,7 +91,13 @@ const user_update = async (req, res) => {
 
     if (!user) return res.status(404).json({ message: "User not Found." });
 
-    return res.status(200).json({ message: "Account Successfully Updated" });
+    const expiration = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60;
+    const payload = { user: JSON.stringify(user), exp: expiration };
+    const token = jwt.sign(payload, KEY);
+
+    return res
+      .status(200)
+      .json({ message: "Account Successfully Updated", token: token });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
