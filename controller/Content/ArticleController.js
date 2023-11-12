@@ -1,4 +1,4 @@
-const Article = require("../../models/Content/Announcement");
+const Article = require("../../models/Content/Article");
 
 const article_index = async (req, res) => {
   try {

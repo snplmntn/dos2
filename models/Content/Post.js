@@ -5,12 +5,9 @@ const PostSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
+    index: "text",
   },
   fullname: {
-    type: String,
-    required: true,
-  },
-  title: {
     type: String,
     required: true,
     index: "text",

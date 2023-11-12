@@ -1,4 +1,4 @@
-const alive = async (req, res) => {
+const alive = async (res) => {
   const timestamp = Date.now();
 
   const date = new Date(timestamp);
@@ -11,6 +11,11 @@ const alive = async (req, res) => {
   }
 };
 
+const verified = (req, res) => {
+  return res.status(200).json({ message: "Token Valid" });
+};
+
 module.exports = {
   alive,
+  verified,
 };

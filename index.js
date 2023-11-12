@@ -6,7 +6,7 @@ const cors = require("cors");
 
 //Routes
 //Auth Controller
-const auth = require("./checkAuth");
+const auth = require("./routes/checkAuth");
 
 //Account Routes
 const authRoute = require("./routes/Account/auth");
@@ -48,6 +48,7 @@ app.use("/api/announcement", auth, announcementRoute);
 app.use("/api/search", auth, searchRoute);
 
 //Others
+app.use("/api/jwt", auth, aliveRoute);
 app.use("/api/alive", aliveRoute);
 
 mongoose.connect(process.env.MONGO_URI);

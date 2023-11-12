@@ -5,18 +5,22 @@ const ArticleSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
+    index: "text",
   },
   fullname: {
     type: String,
     required: true,
+    index: "text",
   },
   title: {
     type: String,
     required: true,
+    index: "text",
   },
   content: {
     type: String,
     required: true,
+    index: "text",
   },
   subject: {
     type: Number,

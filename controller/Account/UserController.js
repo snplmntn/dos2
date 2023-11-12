@@ -5,8 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const user_get = async (req, res) => {
-  const userId = req.query.userId;
-  const username = req.query.username;
+  const { userId, username } = req.query;
 
   try {
     const user = userId
@@ -26,7 +25,7 @@ const user_get = async (req, res) => {
       __v,
       ...other
     } = user._doc;
-    res.status(200).json({ message: "User Fetched", other });
+    return res.status(200).json({ message: "User Fetched", other });
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -46,7 +45,7 @@ const user_delete = async (req, res) => {
   // if (req.body.userId === req.params.id || req.user.isAdmin) {
   try {
     await User.findByIdAndDelete(req.params.id);
-    res.status(200).json("Account Successfully Deleted");
+    return res.status(200).json("Account Successfully Deleted");
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
@@ -70,7 +69,7 @@ const user_update = async (req, res) => {
     }
   }
 
-  if (req.body.firstname || req.body.lastname) {
+  if (req.body.firstname && req.body.lastname) {
     req.body.fullname = req.body.firstname + " " + req.body.lastname;
     // try {
     //   const firstname = await Post.findById(req.body.userId).firstname;
@@ -104,7 +103,72 @@ const user_update = async (req, res) => {
   }
 };
 
+const user_find = async (req, res) => {
+  //Email or Username
+  const { account } = req.query;
+  try {
+    // Check if the user exists by email or username
+    const user = await User.findOne({
+      $or: [{ email: account }, { username: account }],
+    });
+    const {
+      emailValid,
+      section,
+      friends,
+      accountVerification,
+      dateAccountCreated,
+      verificationToken,
+      verificationTokenExpiry,
+      password,
+      isAdmin,
+      __v,
+      ...other
+    } = user._doc;
+    res.status(200).json({ message: "User Fetched", other });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
+const user_recover = async (req, res) => {
+  const KEY = process.env.KEY;
+  const { userId } = req.params;
+  let { password } = req.body;
+
+  if (password) {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      password = await bcrypt.hash(req.body.password, salt);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal Server Error", err });
+    }
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { password: password },
+      { new: true }
+    );
+
+    if (!user) return res.status(404).json({ message: "User not Found." });
+
+    const expiration = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60;
+    const payload = { user: JSON.stringify(user), exp: expiration };
+    const token = jwt.sign(payload, KEY);
+
+    return res
+      .status(200)
+      .json({ message: "Account Successfully Recovered", token: token });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal Server Error", err });
+  }
+};
 module.exports = {
+  user_find,
+  user_recover,
   user_get,
   user_index,
   user_delete,
