@@ -39,6 +39,10 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  nameValid: {
+    type: Boolean,
+    default: false,
+  },
   password: {
     type: String,
     required: true,

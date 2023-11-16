@@ -71,14 +71,7 @@ const user_update = async (req, res) => {
 
   if (req.body.firstname && req.body.lastname) {
     req.body.fullname = req.body.firstname + " " + req.body.lastname;
-    // try {
-    //   const firstname = await Post.findById(req.body.userId).firstname;
-    //   const filter = { firstname: firstname };
-    //   const update = { firstname: req.body.firstname };
-    //   await Post.updateMany(filter, update);
-    // } catch (err) {
-    //   return res.status(500).json({ message: "Internal Server Error", err });
-    // }
+    req.body.nameValid = true;
   }
 
   try {
@@ -111,6 +104,11 @@ const user_find = async (req, res) => {
     const user = await User.findOne({
       $or: [{ email: account }, { username: account }],
     });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     const {
       emailValid,
       section,
