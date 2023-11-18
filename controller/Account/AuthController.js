@@ -67,18 +67,19 @@ const user_login = async (req, res) => {
 };
 
 const InvalidateToken = async (req, res) => {
-  const token = new InvalidToken(req.body);
+  const { token } = req.query;
+
+  const invalidToken = new InvalidToken({
+    token: token,
+  });
+
   try {
-    const saveToken = await token.save();
-    res.status(200).json({ message: "Logged Out Successfully", saveToken });
+    await invalidToken.save();
+    res.status(200).json({ message: "Logged Out Successfully", invalidToken });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
-};
-
-const user_logout = async (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
 };
 
 module.exports = {
