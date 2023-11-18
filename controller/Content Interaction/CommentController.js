@@ -1,8 +1,8 @@
-const Comment = require("../../models/Content Interaction/Comment");
+const PostComment = require("../../models/Content Interaction/PostComment");
 
 const commentPost = async (req, res) => {
   const { profilePicture, userId, username, postId, content } = req.body;
-  const comment = new Comment({
+  const comment = new PostComment({
     profilePicture,
     userId,
     username,
@@ -25,7 +25,7 @@ const commentPost = async (req, res) => {
 const getPostComments = async (req, res) => {
   const { postId } = req.params;
   try {
-    const comments = await Comment.find({ postId });
+    const comments = await PostComment.find({ postId });
 
     if (comments) {
       return res.status(200).json({
@@ -45,7 +45,7 @@ const getPostComments = async (req, res) => {
 const getPostCommentCount = async (req, res) => {
   const { postId } = req.params;
   try {
-    const commentCount = await Comment.countDocuments({ postId });
+    const commentCount = await PostComment.countDocuments({ postId });
 
     return res.status(200).json({
       commentCount,
@@ -59,7 +59,7 @@ const getPostCommentCount = async (req, res) => {
 const deleteComment = async (req, res) => {
   const { commentId } = req.params;
   try {
-    const deletedComment = await Comment.findByIdAndDelete(commentId);
+    const deletedComment = await PostComment.findByIdAndDelete(commentId);
 
     if (deletedComment) {
       return res.status(200).json({

@@ -1,9 +1,9 @@
-const Like = require("../../models/Content Interaction/Like");
+const PostLike = require("../../models/Content Interaction/PostLike");
 
 const likePost = async (req, res) => {
   const { postId, userId } = req.body;
 
-  const liked = await Like.findOne({
+  const liked = await PostLike.findOne({
     postId: postId,
     userId: userId,
   });
@@ -14,7 +14,7 @@ const likePost = async (req, res) => {
       liked,
     });
 
-  const like = new Like({
+  const like = new PostLike({
     postId,
     userId,
   });
@@ -34,7 +34,7 @@ const likePost = async (req, res) => {
 const getPostLikeCount = async (req, res) => {
   const { postId } = req.params;
   try {
-    const likeCount = await Like.countDocuments({ postId });
+    const likeCount = await PostLike.countDocuments({ postId });
 
     return res.status(200).json({
       likeCount,
@@ -48,7 +48,7 @@ const getPostLikeCount = async (req, res) => {
 const unlikePost = async (req, res) => {
   const { likeId } = req.params;
   try {
-    await Like.findByIdAndDelete(likeId);
+    await PostLike.findByIdAndDelete(likeId);
 
     return res.status(200).json({
       message: "Unliked Post successfully",
