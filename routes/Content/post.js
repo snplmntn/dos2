@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const postController = require("../../controller/Content/PostController");
-const likeController = require("../../controller/Content Interaction/LikeController");
-const commentController = require("../../controller/Content Interaction/CommentController");
+const likeController = require("../../controller/Content Interaction/PostLikeController");
+const commentController = require("../../controller/Content Interaction/PostCommentController");
 const reportPostController = require("../../controller/Content Interaction/ReportPostController");
 
 //Post=============================================
