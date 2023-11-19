@@ -1,15 +1,16 @@
 const AnnouncementLike = require("../../models/Content Interaction/AnnouncementLike");
 
 const likeAnnouncement = async (req, res) => {
-  const { announcementId, userId } = req.body;
+  const { announcementId, userId, username } = req.body;
 
   const liked = await AnnouncementLike.findOne({
     announcementId: announcementId,
     userId: userId,
+    username: username,
   });
 
   if (liked)
-    return res.status(200).json({
+    return res.status(302).json({
       message: "Announcement already liked",
       liked,
     });
@@ -17,6 +18,7 @@ const likeAnnouncement = async (req, res) => {
   const like = new AnnouncementLike({
     announcementId,
     userId,
+    username,
   });
   try {
     await like.save();
@@ -34,10 +36,11 @@ const likeAnnouncement = async (req, res) => {
 const getAnnouncementLikeCount = async (req, res) => {
   const { announcementId } = req.params;
   try {
-    const likeCount = await AnnouncementLike.countDocuments({ announcementId });
+    const likeCount = await AnnouncementLike.find({ announcementId });
 
     return res.status(200).json({
-      likeCount,
+      likeCount: likeCount.length,
+      likes: likeCount,
     });
   } catch (err) {
     console.error(err);
@@ -46,12 +49,12 @@ const getAnnouncementLikeCount = async (req, res) => {
 };
 
 const unlikeAnnouncement = async (req, res) => {
-  const { announcementId } = req.params;
+  const { likeId } = req.params;
   try {
-    await AnnouncementLike.findByIdAndDelete(announcementId);
+    await AnnouncementLike.findByIdAndDelete(likeId);
 
     return res.status(200).json({
-      message: "Unliked Announcement successfully",
+      message: "Unliked Post successfully",
     });
   } catch (err) {
     console.error(err);

@@ -1,15 +1,16 @@
 const PostLike = require("../../models/Content Interaction/PostLike");
 
 const likePost = async (req, res) => {
-  const { postId, userId } = req.body;
+  const { postId, userId, username } = req.body;
 
   const liked = await PostLike.findOne({
     postId: postId,
     userId: userId,
+    username: username,
   });
 
   if (liked)
-    return res.status(200).json({
+    return res.status(302).json({
       message: "Post already liked",
       liked,
     });
@@ -17,7 +18,9 @@ const likePost = async (req, res) => {
   const like = new PostLike({
     postId,
     userId,
+    username,
   });
+
   try {
     await like.save();
 
@@ -31,13 +34,14 @@ const likePost = async (req, res) => {
   }
 };
 
-const getPostLikeCount = async (req, res) => {
+const getPostLikes = async (req, res) => {
   const { postId } = req.params;
   try {
-    const likeCount = await PostLike.countDocuments({ postId });
+    const likeCount = await PostLike.find({ postId });
 
     return res.status(200).json({
-      likeCount,
+      likeCount: likeCount.length,
+      likes: likeCount,
     });
   } catch (err) {
     console.error(err);
@@ -61,6 +65,6 @@ const unlikePost = async (req, res) => {
 
 module.exports = {
   likePost,
-  getPostLikeCount,
+  getPostLikes,
   unlikePost,
 };
