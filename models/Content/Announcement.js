@@ -19,7 +19,7 @@ const AnnouncementSchema = new mongoose.Schema({
   },
   category: {
     type: Number,
-    enum: [0, 1, 2, 3, 4],
+    enum: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     default: 0,
   },
   dateCreated: {

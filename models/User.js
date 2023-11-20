@@ -50,7 +50,7 @@ const UserSchema = new mongoose.Schema({
   },
   section: {
     type: Number,
-    enum: [0, 1, 2],
+    enum: [0, 1, 2, 3],
     default: 0,
   },
   friends: {
@@ -59,8 +59,8 @@ const UserSchema = new mongoose.Schema({
   },
   bio: {
     type: String,
-    min: 1,
-    max: 100,
+    min: 0,
+    max: 200,
     index: "text",
   },
   profilepicture: String,
