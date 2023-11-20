@@ -9,7 +9,7 @@ const PostCommentSchema = new mongoose.Schema({
   content: String,
   dateCreated: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 

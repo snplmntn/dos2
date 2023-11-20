@@ -7,7 +7,7 @@ const ReportPostSchema = new mongoose.Schema({
   reportContent: String,
   dateCreated: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 
