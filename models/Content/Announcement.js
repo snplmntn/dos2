@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const AnnouncementSchema = new mongoose.Schema({
+  userId: String,
   username: {
     type: String,
     required: true,
@@ -23,7 +24,7 @@ const AnnouncementSchema = new mongoose.Schema({
   },
   dateCreated: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 
