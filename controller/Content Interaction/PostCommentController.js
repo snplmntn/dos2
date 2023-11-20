@@ -1,10 +1,12 @@
 const PostComment = require("../../models/Content Interaction/PostComment");
 
 const commentPost = async (req, res) => {
-  const { profilePicture, userId, username, postId, content } = req.body;
+  const { profilePicture, userId, fullname, username, postId, content } =
+    req.body;
   const comment = new PostComment({
     profilePicture,
     userId,
+    fullname,
     username,
     postId,
     content,

@@ -1,11 +1,18 @@
 const AnnouncementComment = require("../../models/Content Interaction/AnnouncementComment");
 
 const commentAnnouncement = async (req, res) => {
-  const { profilePicture, userId, username, announcementId, content } =
-    req.body;
+  const {
+    profilePicture,
+    userId,
+    fullname,
+    username,
+    announcementId,
+    content,
+  } = req.body;
   const comment = new AnnouncementComment({
     profilePicture,
     userId,
+    fullname,
     username,
     announcementId,
     content,
