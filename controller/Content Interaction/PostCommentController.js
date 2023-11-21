@@ -31,7 +31,7 @@ const commentPost = async (req, res) => {
       content,
     });
   } else {
-    return res.status(204).json({ message: "Comment Unidentified", err });
+    return res.status(204).json({ message: "Comment Unidentified" });
   }
 
   try {
@@ -48,9 +48,18 @@ const commentPost = async (req, res) => {
 };
 
 const getPostComments = async (req, res) => {
-  const { postId } = req.params;
+  if (req.query.postId) query = { postId: req.query.postId };
+  else if (req.query.postCommentId)
+    query = { postCommentId: req.query.postCommentId };
+  else {
+    return res.status(400).json({
+      message: "No Post Id or Comment Id Provided",
+    });
+  }
+
   try {
-    const comments = await PostComment.find({ postId });
+    const comments = await PostComment.find(query);
+    console.log(comments);
 
     if (comments) {
       return res.status(200).json({
@@ -68,9 +77,17 @@ const getPostComments = async (req, res) => {
 };
 
 const getPostCommentCount = async (req, res) => {
-  const { postId } = req.params;
+  if (req.query.postId) query = { postId: req.query.postId };
+  else if (req.query.postCommentId)
+    query = { postCommentId: req.query.postCommentId };
+  else {
+    return res.status(400).json({
+      message: "No Post Id or Comment Id Provided",
+    });
+  }
+
   try {
-    const commentCount = await PostComment.countDocuments({ postId });
+    const commentCount = await PostComment.countDocuments(query);
 
     return res.status(200).json({
       commentCount,

@@ -48,9 +48,17 @@ const commentAnnouncement = async (req, res) => {
 };
 
 const getAnnouncementComments = async (req, res) => {
-  const { announcementId } = req.params;
+  if (req.query.announcementId)
+    query = { announcementId: req.query.announcementId };
+  else if (req.query.announcementCommentId)
+    query = { announcementCommentId: req.query.announcementCommentId };
+  else {
+    return res.status(400).json({
+      message: "No Post Id or Comment Id Provided",
+    });
+  }
   try {
-    const comments = await AnnouncementComment.find({ announcementId });
+    const comments = await AnnouncementComment.find(query);
 
     if (comments) {
       return res.status(200).json({
@@ -68,11 +76,17 @@ const getAnnouncementComments = async (req, res) => {
 };
 
 const getAnnouncementCommentCount = async (req, res) => {
-  const { announcementId } = req.params;
-  try {
-    const commentCount = await AnnouncementComment.countDocuments({
-      announcementId,
+  if (req.query.announcementId)
+    query = { announcementId: req.query.announcementId };
+  else if (req.query.announcementCommentId)
+    query = { announcementCommentId: req.query.announcementCommentId };
+  else {
+    return res.status(400).json({
+      message: "No Post Id or Comment Id Provided",
     });
+  }
+  try {
+    const commentCount = await AnnouncementComment.countDocuments(query);
 
     return res.status(200).json({
       commentCount,

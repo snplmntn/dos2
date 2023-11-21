@@ -41,10 +41,10 @@ router.post("/comment", commentController.commentPost);
 router.delete("/comment/:commentId", commentController.deleteComment);
 
 //Get Post Comment count
-router.get("/comment/count/:postId", commentController.getPostCommentCount);
+router.get("/comment/count", commentController.getPostCommentCount);
 
 //Get Post Comment
-router.get("/comment/:postId", commentController.getPostComments);
+router.get("/comment/c", commentController.getPostComments);
 
 //Report===============================================
 //Post a Report

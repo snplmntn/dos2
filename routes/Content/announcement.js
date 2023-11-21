@@ -42,15 +42,9 @@ router.post("/comment", commentController.commentAnnouncement);
 router.delete("/comment/:commentId", commentController.deleteComment);
 
 //Get Announcement Comment count
-router.get(
-  "/comment/count/:announcementId",
-  commentController.getAnnouncementCommentCount
-);
+router.get("/comment/count", commentController.getAnnouncementCommentCount);
 
 //Get Announcement Comment
-router.get(
-  "/comment/:announcementId",
-  commentController.getAnnouncementComments
-);
+router.get("/comment/c", commentController.getAnnouncementComments);
 
 module.exports = router;
