@@ -7,16 +7,33 @@ const commentAnnouncement = async (req, res) => {
     fullname,
     username,
     announcementId,
+    announcementCommentId,
     content,
   } = req.body;
-  const comment = new AnnouncementComment({
-    profilePicture,
-    userId,
-    fullname,
-    username,
-    announcementId,
-    content,
-  });
+  let comment;
+
+  if (announcementId) {
+    comment = new AnnouncementComment({
+      profilePicture,
+      userId,
+      fullname,
+      username,
+      announcementId,
+      content,
+    });
+  } else if (announcementCommentId) {
+    comment = new AnnouncementComment({
+      profilePicture,
+      userId,
+      fullname,
+      username,
+      announcementCommentId,
+      content,
+    });
+  } else {
+    return res.status(204).json({ message: "Comment Unidentified", err });
+  }
+
   try {
     await comment.save();
 

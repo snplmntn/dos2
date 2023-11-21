@@ -63,7 +63,7 @@ const UserSchema = new mongoose.Schema({
     max: 200,
     index: "text",
   },
-  profilepicture: String,
+  profilePicture: String,
   isAdmin: {
     type: Boolean,
     default: false,

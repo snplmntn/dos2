@@ -1,8 +1,10 @@
 const User = require("../../models/User");
-const Announcement = require("../../models/Content/Article");
-const Post = require("../../models/Content/Post");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Announcement = require("../../models/Content/Announcement");
+const AnnouncementComment = require("../../models/Content Interaction/AnnouncementComment");
+const Post = require("../../models/Content/Post");
+const PostComment = require("../../models/Content Interaction/PostComment");
 
 const user_get = async (req, res) => {
   const { userId, username } = req.query;
@@ -65,13 +67,45 @@ const user_update = async (req, res) => {
       req.body.password = await bcrypt.hash(req.body.password, salt);
     } catch (err) {
       console.error(err);
-      return res.status(500).json({ message: "Internal Server Error", err });
+      return res.status(500).json({ message: "Error Hashing Password", err });
     }
   }
 
   if (req.body.firstname && req.body.lastname) {
     req.body.fullname = req.body.firstname + " " + req.body.lastname;
     req.body.nameValid = true;
+  }
+
+  if (req.body.username || req.body.fullname || req.body.profilePicture) {
+    const update = {};
+    if (req.body.username) update.username = req.body.username;
+    if (req.body.fullname) update.fullname = req.body.fullname;
+    if (req.body.profilePicture)
+      update.profilePicture = req.body.profilePicture;
+
+    //Post
+    await Post.updateMany({ userId: userId }, { $set: update }, { new: true });
+
+    //Post Comment
+    await PostComment.updateMany(
+      { userId: userId },
+      { $set: update },
+      { new: true }
+    );
+
+    //Announcement
+    await Announcement.updateMany(
+      { userId: userId },
+      { $set: update },
+      { new: true }
+    );
+
+    //Announcement Comment
+    await AnnouncementComment.updateMany(
+      { userId: userId },
+      { $set: update },
+      { new: true }
+    );
   }
 
   try {

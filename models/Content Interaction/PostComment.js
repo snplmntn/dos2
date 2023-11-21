@@ -6,6 +6,7 @@ const PostCommentSchema = new mongoose.Schema({
   username: String,
   fullname: String,
   postId: String,
+  postCommentId: String,
   content: String,
   dateCreated: {
     type: Date,

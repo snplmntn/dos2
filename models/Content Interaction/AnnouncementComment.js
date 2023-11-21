@@ -6,6 +6,7 @@ const AnnouncementCommentSchema = new mongoose.Schema({
   username: String,
   fullname: String,
   announcementId: String,
+  announcementCommentId: String,
   content: String,
   dateCreated: {
     type: Date,

@@ -1,16 +1,39 @@
 const PostComment = require("../../models/Content Interaction/PostComment");
 
 const commentPost = async (req, res) => {
-  const { profilePicture, userId, fullname, username, postId, content } =
-    req.body;
-  const comment = new PostComment({
+  const {
     profilePicture,
     userId,
     fullname,
     username,
     postId,
+    postCommentId,
     content,
-  });
+  } = req.body;
+  let comment;
+
+  if (postId) {
+    comment = new PostComment({
+      profilePicture,
+      userId,
+      fullname,
+      username,
+      postId,
+      content,
+    });
+  } else if (postCommentId) {
+    comment = new PostComment({
+      profilePicture,
+      userId,
+      fullname,
+      username,
+      postCommentId,
+      content,
+    });
+  } else {
+    return res.status(204).json({ message: "Comment Unidentified", err });
+  }
+
   try {
     await comment.save();
 
