@@ -59,7 +59,6 @@ const getPostComments = async (req, res) => {
 
   try {
     const comments = await PostComment.find(query);
-    console.log(comments);
 
     if (comments) {
       return res.status(200).json({
