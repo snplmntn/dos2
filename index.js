@@ -19,6 +19,7 @@ const mailRoute = require("./routes/Account/mail");
 //Content Routes
 const postRoute = require("./routes/Content/post");
 const announcementRoute = require("./routes/Content/announcement");
+const commentLikeRoute = require("./routes/Content/commentLike");
 const articleRoute = require("./routes/Content/article");
 const searchRoute = require("./routes/Content/search");
 
@@ -46,6 +47,7 @@ app.use("/api/article", articleRoute);
 //Protected User route
 app.use("/api/post", auth, postRoute);
 app.use("/api/announcement", auth, announcementRoute);
+app.use("/api/comment", auth, commentLikeRoute);
 app.use("/api/search", auth, searchRoute);
 
 //Others
