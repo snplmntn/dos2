@@ -1,24 +1,14 @@
-const PostCommentLike = require("../../models/Content Interaction/PostCommentLike");
-const AnnouncementCommentLike = require("../../models/Content Interaction/AnnouncementCommentLike");
+const CommentLike = require("../../models/Content Interaction/CommentLike");
 
 const commentLike_post = async (req, res) => {
-  const { postCommentId, announcementCommentId, userId, username } = req.body;
+  const { commentId, userId, username } = req.body;
 
   try {
-    let liked;
-    if (postCommentId) {
-      liked = await PostCommentLike.findOne({
-        postCommentId: postCommentId,
-        userId: userId,
-        username: username,
-      });
-    } else if (announcementCommentId) {
-      liked = await AnnouncementCommentLike.findOne({
-        announcementCommentId: announcementCommentId,
-        userId: userId,
-        username: username,
-      });
-    } else return res.status(500).json({ message: "Bad Request" });
+    const liked = await CommentLike.findOne({
+      commentId: commentId,
+      userId: userId,
+      username: username,
+    });
 
     if (liked)
       return res.status(302).json({
@@ -26,25 +16,13 @@ const commentLike_post = async (req, res) => {
         liked,
       });
 
-    let like;
-    if (postCommentId) {
-      like = new AnnouncementLike({
-        postCommentId,
-        userId,
-        username,
-      });
+    const like = new CommentLike({
+      commentId,
+      userId,
+      username,
+    });
 
-      await like.save();
-    } else if (announcementCommentId) {
-      like = new AnnouncementLike({
-        announcementCommentId,
-        userId,
-        username,
-      });
-
-      await like.save();
-    }
-
+    await like.save();
     return res.status(200).json({
       message: "Comment Liked Successfully",
       like,
@@ -56,17 +34,10 @@ const commentLike_post = async (req, res) => {
 };
 
 const commentLikeCount_get = async (req, res) => {
-  const { postCommentId, announcementCommentId } = req.query;
+  const { commentId } = req.query;
 
   try {
-    let likeCount;
-    if (postCommentId)
-      likeCount = await PostCommentLike.find({ postCommentId });
-    else if (announcementCommentId)
-      ikeCount = await AnnouncementCommentLike.find({
-        AnnouncementCommentLike,
-      });
-    else return res.status(500).json({ message: "Bad Request" });
+    const likeCount = await CommentLike.find({ commentId });
 
     return res.status(200).json({
       likeCount: likeCount.length,
@@ -79,11 +50,9 @@ const commentLikeCount_get = async (req, res) => {
 };
 
 const commentLike_delete = async (req, res) => {
-  const { postCommentId, announcementCommentId } = req.query;
+  const { commentId } = req.query;
   try {
-    if (postCommentId) await PostCommentLike.findByIdAndDelete(postCommentId);
-    else if (announcementCommentId)
-      await AnnouncementCommentLike.findByIdAndDelete(announcementCommentId);
+    await CommentLike.findByIdAndDelete(commentId);
 
     return res.status(200).json({
       message: "Unliked Comment successfully",
