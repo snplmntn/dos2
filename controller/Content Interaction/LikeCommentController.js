@@ -50,9 +50,9 @@ const commentLikeCount_get = async (req, res) => {
 };
 
 const commentLike_delete = async (req, res) => {
-  const { commentId } = req.query;
+  const { likeId } = req.query;
   try {
-    await CommentLike.findByIdAndDelete(commentId);
+    await CommentLike.findByIdAndDelete(likeId);
 
     return res.status(200).json({
       message: "Unliked Comment successfully",
