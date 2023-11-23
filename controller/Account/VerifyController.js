@@ -10,7 +10,7 @@ const email_verification = async (req, res) => {
 
     if (user.emailValid === true)
       return res
-        .status(409)
+        .status(200)
         .json({ message: "Account Email already verified" });
 
     user.emailValid = true;
@@ -41,7 +41,7 @@ const account_verification = async (req, res) => {
     }
 
     if (user.accountVerification === true)
-      return res.status(400).send({ message: "Account is already Verified" });
+      return res.status(200).send({ message: "Account is already Verified" });
 
     user.accountVerification = true;
     user.verificationToken = "";
