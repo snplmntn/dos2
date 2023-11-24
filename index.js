@@ -15,11 +15,12 @@ const userRoute = require("./routes/Account/user");
 const verifyRoute = require("./routes/Account/verify");
 const uploadRoute = require("./routes/Account/upload");
 const mailRoute = require("./routes/Account/mail");
+const notificationRoute = require("./routes/Account/notification");
 
 //Content Routes
 const postRoute = require("./routes/Content/post");
 const announcementRoute = require("./routes/Content/announcement");
-const commentLikeRoute = require("./routes/Content/commentLike");
+const commentRoute = require("./routes/Content/comment");
 const articleRoute = require("./routes/Content/article");
 const searchRoute = require("./routes/Content/search");
 
@@ -41,13 +42,14 @@ app.use("/api/mail", mailRoute);
 //Protected User route
 app.use("/api/user", auth, userRoute);
 app.use("/api/upload", auth, uploadRoute);
+app.use("/api/notification", auth, notificationRoute);
 
 //Content
 app.use("/api/article", articleRoute);
 //Protected User route
 app.use("/api/post", auth, postRoute);
 app.use("/api/announcement", auth, announcementRoute);
-app.use("/api/comment", auth, commentLikeRoute);
+app.use("/api/comment", auth, commentRoute);
 app.use("/api/search", auth, searchRoute);
 
 //Others

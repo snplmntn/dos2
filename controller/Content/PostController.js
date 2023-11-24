@@ -2,7 +2,16 @@ const Post = require("../../models/Content/Post");
 
 const post_index = async (req, res) => {
   try {
-    const posts = await Post.find();
+    let query = {};
+
+    // If lastPostId exists in query params, construct query to fetch posts before that ID
+    if (req.query.postId && req.query.postId !== "null") {
+      query._id = { $lt: req.query.postId };
+    }
+
+    // Fetch posts based on the constructed query, sorting by _id in descending order
+    const posts = await Post.find(query).sort({ _id: -1 }).limit(20).lean();
+
     res.status(200).json(posts);
   } catch (err) {
     console.error(err);
