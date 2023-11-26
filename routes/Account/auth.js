@@ -14,6 +14,6 @@ router.post("/logout", authController.InvalidateToken);
 router.get("/find/", authController.user_find);
 
 //Recover Password
-router.get("/recover/", authController.user_recover);
+router.put("/recover/", authController.user_recover);
 
 module.exports = router;

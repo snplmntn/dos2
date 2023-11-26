@@ -117,22 +117,18 @@ const user_find = async (req, res) => {
 const user_recover = async (req, res) => {
   const KEY = process.env.KEY;
   const { userId } = req.query;
-  let { password } = req.body;
+  const { password } = req.body;
 
-  if (password) {
-    try {
-      const salt = await bcrypt.genSalt(10);
-      password = await bcrypt.hash(req.body.password, salt);
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Internal Server Error", err });
-    }
-  }
+  if (!password)
+    return res.status(418).json({ message: "No Password Provided" });
 
   try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const user = await User.findByIdAndUpdate(
       userId,
-      { password: password },
+      { password: hashedPassword },
       { new: true }
     );
 

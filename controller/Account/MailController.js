@@ -219,7 +219,7 @@ const sendAccountVerificationMail = async (req, res) => {
             </div>
             <div class="content">
               <h2>${user.verificationToken}</h2>
-              <p>To change your info enter the above code.</p>
+              <p>To change your info enter the code above.</p>
               <p>
                 If you did not request to change your info secure your account
                 immediately by changing your password on <a href="dosshs.online/">DOS</a>.
