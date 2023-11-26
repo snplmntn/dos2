@@ -10,4 +10,10 @@ router.post("/login", authController.user_login);
 // LOGIN
 router.post("/logout", authController.InvalidateToken);
 
+//Forgot Password
+router.get("/find/", authController.user_find);
+
+//Recover Password
+router.get("/recover/", authController.user_recover);
+
 module.exports = router;

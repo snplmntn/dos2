@@ -13,10 +13,4 @@ router.put("/:userId", userController.user_update);
 //Delete User
 router.delete("/:id", userController.user_delete);
 
-//Forgot Password
-router.get("/find/", userController.user_find);
-
-//Recover Password
-router.get("/recover/", userController.user_recover);
-
 module.exports = router;
