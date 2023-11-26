@@ -97,9 +97,7 @@ const sendEmailVerificationMail = async (req, res) => {
               <div class="content">
                 <h2>Hello, ${user.username}!</h2>
                 <p>
-                  Welcome to DOS! We're thrilled to welcome you as a new member of our
-                  company. This is your first step toward exciting opportunities and
-                  valuable experiences.
+                  We're thrilled to welcome you on <a href="dosshs.online/">DOS</a>. This is your first step toward exciting and valuable experiences.
                 </p>
                 <p>
                   To get started, please verify your email address. Input the code
@@ -124,14 +122,6 @@ const sendEmailVerificationMail = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error", err });
   }
 };
-
-{
-  /* <a
-                  href="https://backend.dosshs.online/api/verify/email?token=${verificationToken}"
-                  class="button"
-                  >Verify Email</a
-                > */
-}
 
 const sendAccountVerificationMail = async (req, res) => {
   const { userId } = req.params;
@@ -229,10 +219,10 @@ const sendAccountVerificationMail = async (req, res) => {
             </div>
             <div class="content">
               <h2>${user.verificationToken}</h2>
-              <p>To reset your password enter the above code.</p>
+              <p>To change your info enter the above code.</p>
               <p>
-                If you did not request to change your password secure your account
-                immediately by changing your password on <a href="dosshs.online/settings">DOS</a>.
+                If you did not request to change your info secure your account
+                immediately by changing your password on <a href="dosshs.online/">DOS</a>.
               </p>
             </div>
             <div class="footer">&copy; 2023 DOS</div>
