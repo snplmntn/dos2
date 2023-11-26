@@ -2,17 +2,26 @@ const Post = require("../../models/Content/Post");
 
 const post_index = async (req, res) => {
   try {
-    let query = {};
+    const { postId, username } = req.query;
+    if (postId) {
+      let query = {};
 
-    // If lastPostId exists in query params, construct query to fetch posts before that ID
-    if (req.query.postId && req.query.postId !== "null") {
-      query._id = { $lt: req.query.postId };
+      // If lastPostId exists in query params, construct query to fetch posts before that ID
+      if (postId && postId !== "null") {
+        query._id = { $lt: postId };
+      }
+
+      // Fetch posts based on the constructed query, sorting by _id in descending order
+      const posts = await Post.find(query).sort({ _id: -1 }).limit(20).lean();
+
+      return res.status(200).json(posts);
+    } else if (username) {
+      const posts = await Post.find({ username: username })
+        .sort({ _id: -1 })
+        .lean();
+
+      return res.status(200).json(posts);
     }
-
-    // Fetch posts based on the constructed query, sorting by _id in descending order
-    const posts = await Post.find(query).sort({ _id: -1 }).limit(20).lean();
-
-    res.status(200).json(posts);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
