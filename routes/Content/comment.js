@@ -10,4 +10,13 @@ router.get("/", LikeCommentController.commentLikeCount_get);
 //Unlike Comment
 router.delete("/", LikeCommentController.commentLike_delete);
 
+// //Like Comment
+// router.post("/c", LikeCommentController.commentLike_post);
+
+// //Get Comment Likes
+// router.get("/c", LikeCommentController.commentLikeCount_get);
+
+// //Unlike Comment
+// router.delete("/c", LikeCommentController.commentLike_delete);
+
 module.exports = router;

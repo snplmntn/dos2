@@ -5,11 +5,11 @@ const CommentSchema = new mongoose.Schema({
   userId: String,
   username: String,
   fullname: String,
-  postId: String,
+  commentId: String,
   content: String,
   dateCreated: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 

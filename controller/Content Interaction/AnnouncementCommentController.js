@@ -48,13 +48,16 @@ const commentAnnouncement = async (req, res) => {
 };
 
 const getAnnouncementComments = async (req, res) => {
-  if (req.query.announcementId)
-    query = { announcementId: req.query.announcementId };
-  else if (req.query.announcementCommentId)
-    query = { announcementCommentId: req.query.announcementCommentId };
+  const { announcementId, announcementCommentId } = req.query;
+
+  let query = {};
+
+  if (announcementId) query = { announcementId };
+  else if (announcementCommentId)
+    query = { announcementCommentId: announcementCommentId };
   else {
     return res.status(400).json({
-      message: "No Post Id or Comment Id Provided",
+      message: "No Announcement Id or Comment Id Provided",
     });
   }
   try {
