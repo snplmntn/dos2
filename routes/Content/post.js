@@ -12,7 +12,7 @@ router.get("/", postController.post_index);
 router.get("/:postId", postController.post_get);
 
 //Get User Posts
-router.get("/user/:userId", postController.post_user_get);
+router.get("/user/p", postController.post_user_get);
 
 //Post Post
 router.post("/", postController.post_post);

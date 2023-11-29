@@ -2,26 +2,18 @@ const Post = require("../../models/Content/Post");
 
 const post_index = async (req, res) => {
   try {
-    const { postId, username } = req.query;
-    if (postId) {
-      let query = {};
+    const { postId } = req.query;
+    let query = {};
 
-      // If lastPostId exists in query params, construct query to fetch posts before that ID
-      if (postId && postId !== "null") {
-        query._id = { $lt: postId };
-      }
-
-      // Fetch posts based on the constructed query, sorting by _id in descending order
-      const posts = await Post.find(query).sort({ _id: -1 }).limit(20).lean();
-
-      return res.status(200).json(posts);
-    } else if (username) {
-      const posts = await Post.find({ username: username })
-        .sort({ _id: -1 })
-        .lean();
-
-      return res.status(200).json(posts);
+    // If lastPostId exists in query params, construct query to fetch posts before that ID
+    if (postId && postId !== "null") {
+      query._id = { $lt: postId };
     }
+
+    // Fetch posts based on the constructed query, sorting by _id in descending order
+    const posts = await Post.find(query).sort({ _id: -1 }).limit(20).lean();
+
+    return res.status(200).json(posts);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
@@ -44,7 +36,7 @@ const post_get = async (req, res) => {
 const post_user_get = async (req, res) => {
   try {
     const posts = await Post.find({
-      userId: req.params.userId,
+      username: req.query.username,
     });
     if (!posts) return res.status(404).json({ message: "Posts not found" });
     res.status(200).json(posts);
@@ -66,7 +58,6 @@ const post_post = async (req, res) => {
 };
 
 const post_update = async (req, res) => {
-  // if (req.body.userId === req.params.id || req.user.isAdmin) {
   try {
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id, // Update based on the document's ID
@@ -74,20 +65,14 @@ const post_update = async (req, res) => {
       { new: true } // Return the updated document
     );
 
-    // Check if the document was found and updated
     if (!updatedPost) {
       return res.status(404).json("Post not found");
     }
-
-    // Send the updated document in the response
     res.status(200).json({ message: "Post Updated Successfully", updatedPost });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal Server Error", err });
   }
-  // } else {
-  //   return res.status(403).json("Error Request");
-  // }
 };
 
 const post_delete = async (req, res) => {

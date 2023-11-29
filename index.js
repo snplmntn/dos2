@@ -20,6 +20,7 @@ const notificationRoute = require("./routes/Account/notification");
 //Content Routes
 const postRoute = require("./routes/Content/post");
 const announcementRoute = require("./routes/Content/announcement");
+const feedbackRoute = require("./routes/Content/feedback");
 const commentRoute = require("./routes/Content/comment");
 const articleRoute = require("./routes/Content/article");
 const searchRoute = require("./routes/Content/search");
@@ -49,6 +50,7 @@ app.use("/api/article", articleRoute);
 //Protected User route
 app.use("/api/post", auth, postRoute);
 app.use("/api/announcement", auth, announcementRoute);
+app.use("/api/feedback", auth, feedbackRoute);
 app.use("/api/comment", auth, commentRoute);
 app.use("/api/search", auth, searchRoute);
 

@@ -10,7 +10,7 @@ router.get("/", announcementController.announcement_index);
 router.get("/:id", announcementController.announcement_get);
 
 //Get User Announcements
-router.get("/user/:userId", announcementController.announcement_user_get);
+router.get("/user/a", announcementController.announcement_user_get);
 
 //Post Announcement
 router.post("/", announcementController.announcement_post);

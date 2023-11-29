@@ -27,7 +27,7 @@ const announcement_get = async (req, res) => {
 const announcement_user_get = async (req, res) => {
   try {
     const announcements = await Announcement.find({
-      userId: req.params.userId,
+      username: req.query.username,
     });
     if (!announcements)
       return res.status(404).json({ message: "Announcements not found" });
